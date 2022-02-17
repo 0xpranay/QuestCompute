@@ -15,7 +15,8 @@ BigInt.prototype.toJSON = function () {
   return this.toString();
 };
 async function fetchUsers(id, query, params, client) {
-  console.log(id, params);
+  console.log(`Fetching for task ${id}`);
+  console.log("With params ", params);
   const result = await client.query({
     query: query,
     variables: params,
@@ -74,9 +75,8 @@ async function main() {
         break;
     }
     const users = await fetchUsers(id, query, params, client);
-    console.log(id, " No of users is ", users.data.backend.length);
+    console.log("task ", id, " No of users is ", users.data.backend.length);
     const checkSumUsers = cleanUsers(users, id);
-    console.log(checkSumUsers.toString());
     writeFile(
       `./${i}.json`,
       JSON.stringify(checkSumUsers, null, 2),
