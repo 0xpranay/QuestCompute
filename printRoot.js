@@ -3,6 +3,7 @@ const keccak256 = require("keccak256");
 const { readFileSync, writeFile } = require("fs");
 const { ethers } = require("ethers");
 const { taskList } = require("./tasks");
+const chalk = require("chalk");
 require("cross-fetch/polyfill");
 console.clear();
 async function main() {
@@ -20,7 +21,10 @@ async function main() {
         sortPairs: true,
       }
     );
-    console.log(i, merkleTree.getHexRoot());
+    console.log(
+      chalk.greenBright(`Task ${i}`),
+      chalk.black.bgYellow(merkleTree.getHexRoot())
+    );
     taskRoots.taskRoots.push({ [i]: merkleTree.getHexRoot() });
   }
   writeFile(`./roots.json`, JSON.stringify(taskRoots, null, 2), (error) => {

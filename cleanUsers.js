@@ -1,10 +1,7 @@
 const { ethers } = require("ethers");
 
-function cleanUsers(users, id) {
+function cleanUsers(users, id, cleaned) {
   const uncleaned = users;
-  const cleaned = {
-    users: [],
-  };
   for (let i = 0; i < uncleaned.data.backend.length; i++) {
     let rawObject = uncleaned.data.backend[i];
     let rawAddress = "";
