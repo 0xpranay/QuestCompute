@@ -1,5 +1,5 @@
 const { ethers } = require("ethers");
-
+const whitelist = require("./whitelist.json");
 function cleanUsers(users, id, cleaned) {
   const uncleaned = users;
   for (let i = 0; i < uncleaned.data.backend.length; i++) {
@@ -20,7 +20,12 @@ function cleanUsers(users, id, cleaned) {
         break;
     }
     const cleanAddress = ethers.utils.getAddress(rawAddress);
-    if (!cleaned.users.includes(cleanAddress)) cleaned.users.push(cleanAddress);
+    if (whitelist.includes(rawAddress) || whitelist.includes(cleanAddress)) {
+      if (!cleaned.users.includes(cleanAddress)) {
+        cleaned.users.push(cleanAddress);
+        console.log(`${rawAddress} is in whitelist`);
+      }
+    }
   }
   return cleaned;
 }
